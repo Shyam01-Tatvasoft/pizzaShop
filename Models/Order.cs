@@ -7,33 +7,33 @@ public partial class Order
 {
     public int Id { get; set; }
 
-    public decimal SubTotalAmount { get; set; }
+    public int? Customerid { get; set; }
 
-    public decimal TotalAmount { get; set; }
+    public decimal Subtotalamount { get; set; }
 
-    public string? Comment { get; set; }
-
-    public string Status { get; set; } = null!;
-
-    public int? CustomerId { get; set; }
-
-    public int? NoOfPerson { get; set; }
-
-    public decimal? Discount { get; set; }
+    public decimal Totalamount { get; set; }
 
     public decimal? Tax { get; set; }
 
-    public bool IsGstselected { get; set; }
+    public decimal? Discount { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+    public string? Notes { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+    public string Status { get; set; } = null!;
 
-    public string? CreatedBy { get; set; }
+    public bool? Isgstselected { get; set; }
 
-    public string? UpdatedBy { get; set; }
+    public bool? Isdeleted { get; set; }
 
-    public int? PaymentId { get; set; }
+    public DateTime? Createddate { get; set; }
+
+    public string? Createdby { get; set; }
+
+    public DateTime? Updateddate { get; set; }
+
+    public string? Updatedby { get; set; }
+
+    public int? Paymentid { get; set; }
 
     public virtual Customer? Customer { get; set; }
 
@@ -41,11 +41,11 @@ public partial class Order
 
     public virtual ICollection<Invoice> Invoices { get; set; } = new List<Invoice>();
 
-    public virtual ICollection<OrderItemMapping> OrderItemMappings { get; set; } = new List<OrderItemMapping>();
+    public virtual ICollection<Orderitem> Orderitems { get; set; } = new List<Orderitem>();
 
-    public virtual ICollection<OrderTaxMapping> OrderTaxMappings { get; set; } = new List<OrderTaxMapping>();
+    public virtual ICollection<Ordertaxmapping> Ordertaxmappings { get; set; } = new List<Ordertaxmapping>();
 
     public virtual Payment? Payment { get; set; }
 
-    public virtual ICollection<TableOrderMapping> TableOrderMappings { get; set; } = new List<TableOrderMapping>();
+    public virtual ICollection<Tableordermapping> Tableordermappings { get; set; } = new List<Tableordermapping>();
 }

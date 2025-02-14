@@ -7,29 +7,29 @@ public partial class Table
 {
     public int Id { get; set; }
 
-    public string TableName { get; set; } = null!;
+    public int? Sectionid { get; set; }
 
-    public int SectionId { get; set; }
+    public string Name { get; set; } = null!;
 
-    public bool? IsAvailable { get; set; }
+    public short Capacity { get; set; }
 
-    public string? Status { get; set; }
+    public string Status { get; set; } = null!;
 
-    public int? Capacity { get; set; }
+    public bool? Isavailable { get; set; }
 
-    public bool? IsDeleted { get; set; }
+    public bool? Isdeleted { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+    public DateTime? Createddate { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+    public string? Createdby { get; set; }
 
-    public string? CreatedBy { get; set; }
+    public DateTime? Updateddate { get; set; }
 
-    public string? UpdatedBy { get; set; }
+    public string? Updatedby { get; set; }
 
-    public virtual Section Section { get; set; } = null!;
+    public virtual Section? Section { get; set; }
 
-    public virtual ICollection<TableOrderMapping> TableOrderMappings { get; set; } = new List<TableOrderMapping>();
+    public virtual ICollection<Tableordermapping> Tableordermappings { get; set; } = new List<Tableordermapping>();
 
-    public virtual ICollection<WaitingToken> WaitingTokens { get; set; } = new List<WaitingToken>();
+    public virtual ICollection<Waitingtoken> Waitingtokens { get; set; } = new List<Waitingtoken>();
 }

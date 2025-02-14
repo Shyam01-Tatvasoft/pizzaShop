@@ -7,33 +7,33 @@ public partial class Modifier
 {
     public int Id { get; set; }
 
-    public string ModifierName { get; set; } = null!;
-
-    public string? ModifierDescription { get; set; }
+    public string Name { get; set; } = null!;
 
     public decimal Rate { get; set; }
 
-    public int Quantity { get; set; }
+    public short Quantity { get; set; }
 
-    public int UnitId { get; set; }
+    public bool? Isdeleted { get; set; }
 
-    public int? ModifiergroupId { get; set; }
+    public string Description { get; set; } = null!;
 
-    public bool? IsDeleted { get; set; }
+    public int? Modifiergroupid { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+    public int? Unitid { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+    public DateTime? Createddate { get; set; }
 
-    public string? CreatedBy { get; set; }
+    public string? Createdby { get; set; }
 
-    public string? UpdatedBy { get; set; }
+    public DateTime? Updateddate { get; set; }
+
+    public string? Updatedby { get; set; }
 
     public virtual ICollection<Invoice> Invoices { get; set; } = new List<Invoice>();
 
-    public virtual ModifierGroup? Modifiergroup { get; set; }
+    public virtual Modifiergroup? Modifiergroup { get; set; }
 
-    public virtual ICollection<OrderItemModifierMapping> OrderItemModifierMappings { get; set; } = new List<OrderItemModifierMapping>();
+    public virtual ICollection<Orderitemmodifiermapping> Orderitemmodifiermappings { get; set; } = new List<Orderitemmodifiermapping>();
 
-    public virtual Unit Unit { get; set; } = null!;
+    public virtual Unit? Unit { get; set; }
 }

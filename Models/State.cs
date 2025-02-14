@@ -7,17 +7,19 @@ public partial class State
 {
     public int Id { get; set; }
 
-    public string StateName { get; set; } = null!;
+    public string Name { get; set; } = null!;
 
-    public int? CountryId { get; set; }
+    public int? Countryid { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+    public DateTime? Createddate { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+    public string? Createdby { get; set; }
 
-    public string? CreatedBy { get; set; }
+    public DateTime? Updateddate { get; set; }
 
-    public string? UpdatedBy { get; set; }
+    public string? Updatedby { get; set; }
+
+    public virtual ICollection<City> Cities { get; set; } = new List<City>();
 
     public virtual Country? Country { get; set; }
 }

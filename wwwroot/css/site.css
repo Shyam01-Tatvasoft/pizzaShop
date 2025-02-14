@@ -1,22 +1,57 @@
-html {
-  font-size: 14px;
+/* Login Page */
+#login-page {
+  height: 100vh;
+  width: 100%;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
+#login-img {
+  object-fit: cover;
+}
+
+#pizzashop_logo {
+  width: 60px;
+  height: 50px;
+}
+
+.form-input-div {
+  position: relative;
+}
+
+.form-input-icon {
+  position: absolute;
+  right: 10px;
+  top: 22%;
+}
+
+@media (max-width: 768px) {
+  #login-form-section {
+    background-image: url(../images/pizzashop-bg-blure.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+  }
+  .main-container {
+    height: 100%;
+  }
+  .loginForm{
+    width: 100% !important;
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
+@media (max-width: 1024px) {
+  #login-form-section {
+    width: 100%;
+    background-image: url(../images/pizzashop-bg-blure.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+  }
 
-html {
-  position: relative;
-  min-height: 100%;
-}
+  #login-page .login-img {
+    display: none !important;
+  }
 
-body {
-  margin-bottom: 60px;
+  .loginForm{
+    width: 70% ;
+  }
 }

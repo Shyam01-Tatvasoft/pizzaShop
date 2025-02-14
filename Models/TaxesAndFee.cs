@@ -3,29 +3,29 @@ using System.Collections.Generic;
 
 namespace PizzaShop.Models;
 
-public partial class TaxesAndFee
+public partial class Taxesandfee
 {
     public int Id { get; set; }
 
-    public string TaxName { get; set; } = null!;
+    public string Name { get; set; } = null!;
 
-    public decimal TaxPercentage { get; set; }
+    public decimal Percentge { get; set; }
 
-    public decimal? FlatAmount { get; set; }
+    public decimal? Flatamount { get; set; }
 
-    public bool? IsEnabled { get; set; }
+    public bool? Isactive { get; set; }
 
-    public bool? IsDefaultTax { get; set; }
+    public bool? Isdefault { get; set; }
 
-    public bool? IsDeleted { get; set; }
+    public bool? Isdeleted { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+    public DateTime? Createddate { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+    public string? Createdby { get; set; }
 
-    public string? CreatedBy { get; set; }
+    public DateTime? Updateddate { get; set; }
 
-    public string? UpdatedBy { get; set; }
+    public string? Updatedby { get; set; }
 
-    public virtual ICollection<OrderTaxMapping> OrderTaxMappings { get; set; } = new List<OrderTaxMapping>();
+    public virtual ICollection<Ordertaxmapping> Ordertaxmappings { get; set; } = new List<Ordertaxmapping>();
 }

@@ -7,21 +7,23 @@ public partial class Customer
 {
     public int Id { get; set; }
 
-    public string CustomerName { get; set; } = null!;
+    public string Name { get; set; } = null!;
 
-    public string CustomerEmail { get; set; } = null!;
+    public string Email { get; set; } = null!;
 
-    public string CustomerPhone { get; set; } = null!;
+    public string Phone { get; set; } = null!;
 
-    public DateTime? CreatedAt { get; set; }
+    public DateTime Date { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+    public DateTime? Createddate { get; set; }
 
-    public string? CreatedBy { get; set; }
+    public string? Createdby { get; set; }
 
-    public string? UpdatedBy { get; set; }
+    public DateTime? Updateddate { get; set; }
+
+    public string? Updatedby { get; set; }
 
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 
-    public virtual ICollection<WaitingToken> WaitingTokens { get; set; } = new List<WaitingToken>();
+    public virtual ICollection<Waitingtoken> Waitingtokens { get; set; } = new List<Waitingtoken>();
 }

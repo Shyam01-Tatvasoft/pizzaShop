@@ -7,15 +7,15 @@ public partial class Permission
 {
     public int Id { get; set; }
 
-    public string PermissionName { get; set; } = null!;
+    public string Name { get; set; } = null!;
 
-    public DateTime? CreatedAt { get; set; }
+    public DateTime? Createddate { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+    public string? Createdby { get; set; }
 
-    public string? CreatedBy { get; set; }
+    public DateTime? Updateddate { get; set; }
 
-    public string? UpdatedBy { get; set; }
+    public string? Updatedby { get; set; }
 
-    public virtual ICollection<RolePermissionMapping> RolePermissionMappings { get; set; } = new List<RolePermissionMapping>();
+    public virtual ICollection<Rolepermission> Rolepermissions { get; set; } = new List<Rolepermission>();
 }

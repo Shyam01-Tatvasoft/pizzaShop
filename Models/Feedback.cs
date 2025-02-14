@@ -7,25 +7,25 @@ public partial class Feedback
 {
     public int Id { get; set; }
 
-    public int? Food { get; set; }
+    public int? Orderid { get; set; }
 
-    public int? Serivce { get; set; }
-
-    public int? Ambience { get; set; }
+    public decimal? Avgrating { get; set; }
 
     public string? Comment { get; set; }
 
-    public int? OrderId { get; set; }
+    public short? Food { get; set; }
 
-    public decimal? AvgRating { get; set; }
+    public short? Service { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+    public short? Ambience { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+    public DateTime? Createddate { get; set; }
 
-    public string? CreatedBy { get; set; }
+    public string? Createdby { get; set; }
 
-    public string? UpdatedBy { get; set; }
+    public DateTime? Updateddate { get; set; }
+
+    public string? Updatedby { get; set; }
 
     public virtual Order? Order { get; set; }
 }

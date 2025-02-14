@@ -3,31 +3,31 @@ using System.Collections.Generic;
 
 namespace PizzaShop.Models;
 
-public partial class OrderItemModifierMapping
+public partial class Orderitemmodifiermapping
 {
     public int Id { get; set; }
 
-    public int? OrderItemMappingId { get; set; }
+    public int? Orderitemid { get; set; }
 
-    public int? ModifierId { get; set; }
+    public int? Modifierid { get; set; }
 
-    public int Quantity { get; set; }
+    public short? Quantityofmodifier { get; set; }
 
-    public decimal? ModifierRate { get; set; }
+    public decimal? Rateofmodifier { get; set; }
 
-    public decimal? TotalAmount { get; set; }
+    public decimal? Totalamount { get; set; }
 
-    public bool? IsDeleted { get; set; }
+    public bool? Isdeleted { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+    public DateTime? Createddate { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+    public string? Createdby { get; set; }
 
-    public string? CreatedBy { get; set; }
+    public DateTime? Updateddate { get; set; }
 
-    public string? UpdatedBy { get; set; }
+    public string? Updatedby { get; set; }
 
     public virtual Modifier? Modifier { get; set; }
 
-    public virtual OrderItemMapping? OrderItemMapping { get; set; }
+    public virtual Orderitem? Orderitem { get; set; }
 }

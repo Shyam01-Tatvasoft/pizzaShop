@@ -3,51 +3,53 @@ using System.Collections.Generic;
 
 namespace PizzaShop.Models;
 
-public partial class MenuItem
+public partial class Menuitem
 {
     public int Id { get; set; }
 
-    public string ItemName { get; set; } = null!;
+    public int? Categoryid { get; set; }
 
-    public string? ItemDescription { get; set; }
+    public string Name { get; set; } = null!;
 
-    public int CategoryId { get; set; }
-
-    public string ItemType { get; set; } = null!;
+    public string Itemtype { get; set; } = null!;
 
     public decimal Rate { get; set; }
 
-    public int Quantity { get; set; }
+    public short Quantity { get; set; }
 
-    public int UnitId { get; set; }
+    public bool? Isavailable { get; set; }
 
-    public bool? IsAvailable { get; set; }
+    public bool? Isdeleted { get; set; }
 
-    public bool IsDefaultTax { get; set; }
+    public string? Comment { get; set; }
 
-    public decimal? TaxPercentage { get; set; }
+    public int? Unitid { get; set; }
 
-    public string? ShortCode { get; set; }
+    public bool? Isdefaulttax { get; set; }
 
-    public bool? IsFavourite { get; set; }
+    public bool? Isfavourite { get; set; }
 
-    public string? ItemImage { get; set; }
+    public decimal? Taxpercentage { get; set; }
 
-    public bool? IsDeleted { get; set; }
+    public string? Shortcode { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+    public string? Description { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+    public string? Itemimage { get; set; }
 
-    public string? CreatedBy { get; set; }
+    public DateTime? Createddate { get; set; }
 
-    public string? UpdatedBy { get; set; }
+    public string? Createdby { get; set; }
 
-    public virtual ItemCategory Category { get; set; } = null!;
+    public DateTime? Updateddate { get; set; }
 
-    public virtual ICollection<ItemModifiergroupMapping> ItemModifiergroupMappings { get; set; } = new List<ItemModifiergroupMapping>();
+    public string? Updatedby { get; set; }
 
-    public virtual ICollection<OrderItemMapping> OrderItemMappings { get; set; } = new List<OrderItemMapping>();
+    public virtual Category? Category { get; set; }
 
-    public virtual Unit Unit { get; set; } = null!;
+    public virtual ICollection<Mappingmenuitemwithmodifier> Mappingmenuitemwithmodifiers { get; set; } = new List<Mappingmenuitemwithmodifier>();
+
+    public virtual ICollection<Orderitem> Orderitems { get; set; } = new List<Orderitem>();
+
+    public virtual Unit? Unit { get; set; }
 }

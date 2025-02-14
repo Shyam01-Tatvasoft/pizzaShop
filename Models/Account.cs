@@ -7,23 +7,23 @@ public partial class Account
 {
     public int Id { get; set; }
 
-    public string Password { get; set; } = null!;
-
     public string Email { get; set; } = null!;
 
-    public int RoleId { get; set; }
+    public string Password { get; set; } = null!;
 
-    public int UserId { get; set; }
+    public int? Roleid { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+    public bool? Isdeleted { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+    public bool? Isfirstlogin { get; set; }
 
-    public string? CreatedBy { get; set; }
+    public DateTime? Createddate { get; set; }
 
-    public string? UpdatedBy { get; set; }
+    public string? Createdby { get; set; }
 
-    public virtual Role Role { get; set; } = null!;
+    public DateTime? Updateddate { get; set; }
 
-    public virtual User User { get; set; } = null!;
+    public string? Updatedby { get; set; }
+
+    public virtual Role? Role { get; set; }
 }

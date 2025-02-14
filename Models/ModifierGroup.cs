@@ -3,25 +3,25 @@ using System.Collections.Generic;
 
 namespace PizzaShop.Models;
 
-public partial class ModifierGroup
+public partial class Modifiergroup
 {
     public int Id { get; set; }
 
-    public string GroupName { get; set; } = null!;
+    public string Name { get; set; } = null!;
 
-    public string? GroupDescription { get; set; }
+    public string Description { get; set; } = null!;
 
-    public bool? IsDeleted { get; set; }
+    public bool? Isdeleted { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+    public DateTime? Createddate { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+    public string? Createdby { get; set; }
 
-    public string? CreatedBy { get; set; }
+    public DateTime? Updateddate { get; set; }
 
-    public string? UpdatedBy { get; set; }
+    public string? Updatedby { get; set; }
 
-    public virtual ICollection<ItemModifiergroupMapping> ItemModifiergroupMappings { get; set; } = new List<ItemModifiergroupMapping>();
+    public virtual ICollection<Mappingmenuitemwithmodifier> Mappingmenuitemwithmodifiers { get; set; } = new List<Mappingmenuitemwithmodifier>();
 
     public virtual ICollection<Modifier> Modifiers { get; set; } = new List<Modifier>();
 }

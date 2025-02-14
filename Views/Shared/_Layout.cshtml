@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="~/PizzaShop.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
+    @* <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PizzaShop</a>
@@ -29,18 +29,106 @@
                 </div>
             </div>
         </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    </header> *@
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - PizzaShop - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <div class="container-fluid">
+      <div class="row main-container">
+        <!-- sidebar -->
+        <div class="offcanvas-lg offcanvas-start col-lg-2 p-0" id="sidebar">
+          <div
+            class="d-flex align-items-center justify-content-center p-0 mb-4 sidebar-header"
+          >
+            <img
+              src="./images/logos/pizzashop_logo.png"
+              alt="pizzashop_logo"
+              id="pizzashop_logo"
+            />
+            <h6 class="textBlue ms-2">PIZZASHOP</h6>
+            <button
+              class="btn btn-close close-btn ms-4"
+              id="sidebar-cancel-btn"
+              type="button"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#sidebar"
+              aria-controls="offcanvasWithBothOptions"
+            ></button>
+          </div>
+          <ul class="nav flex-column">
+            <a href="./AdminDashboard.html">
+              <li class="nav-item">
+                <i class="fa-solid fa-table-cells-large me-2"></i>Dashboard
+              </li>
+            </a>
+            <a href="./User.html">
+              <li class="nav-item">
+                <i class="fa-solid fa-users me-2"></i>User
+              </li>
+            </a>
+            <a href="./Permission.html">
+              <li class="nav-item">
+                <i class="fa-solid fa-monument me-2"></i>Role and Permission
+              </li>
+            </a>
+            <a href="./Menu.html">
+              <li class="nav-item">
+                <i class="fa-solid fa-square me-2"></i>Menu
+              </li>
+            </a>
+            <a href="./AdminDashboard.html">
+              <li class="nav-item">
+                <i class="fa-solid fa-money-check-dollar me-2"></i>Table And
+                Section
+              </li>
+            </a>
+            <a href="./AdminDashboard.html">
+              <li class="nav-item">
+                <i class="fa-solid fa-cart-plus me-2"></i>Taxes And Fees
+              </li>
+            </a>
+            <a href="./AdminDashboard.html">
+              <li class="nav-item">
+                <i class="fa-solid fa-users-rectangle me-2"></i>Orders
+              </li>
+            </a>
+            <a href="./AdminDashboard.html">
+              <li class="nav-item">
+                <i class="fa-solid fa-user me-2"></i>Customers
+              </li>
+            </a>
+          </ul>
         </div>
-    </footer>
+
+        <div class="col-lg-10 main-section">
+          <!-- navbar -->
+          <nav
+            class="navbar navbar-expanded-lg justify-content-end align-items-center navbar-light fixed-top"
+            style="height: 50px"
+          >
+            <img
+              src="./images/icons/menu-bar.svg"
+              alt="toggle-btn"
+              class="mx-2"
+              id="menu-icon"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#sidebar"
+              aria-controls="offcanvasWithBothOptions"
+            />
+            <img
+              src="./images/icons/customer.svg"
+              alt="User-icon"
+              class="me-3"
+            />
+          </nav>
+
+          <!-- main content -->
+            <div class="container mt-5">
+                <main role="main" class="">
+                @RenderBody()
+                </main>
+            </div>
+        </div>
+      </div>
+    </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

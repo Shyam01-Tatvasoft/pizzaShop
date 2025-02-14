@@ -3,25 +3,25 @@ using System.Collections.Generic;
 
 namespace PizzaShop.Models;
 
-public partial class TableOrderMapping
+public partial class Tableordermapping
 {
     public int Id { get; set; }
 
-    public int? OrderId { get; set; }
+    public int? Orderid { get; set; }
 
-    public int? TableId { get; set; }
+    public int? Tableid { get; set; }
 
-    public int? NoOfPerson { get; set; }
+    public short Noofpersons { get; set; }
 
-    public bool? IsDeleted { get; set; }
+    public bool? Isdeleted { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+    public DateTime? Createddate { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+    public string? Createdby { get; set; }
 
-    public string? CreatedBy { get; set; }
+    public DateTime? Updateddate { get; set; }
 
-    public string? UpdatedBy { get; set; }
+    public string? Updatedby { get; set; }
 
     public virtual Order? Order { get; set; }
 

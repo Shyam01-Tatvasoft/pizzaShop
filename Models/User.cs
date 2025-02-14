@@ -7,15 +7,17 @@ public partial class User
 {
     public int Id { get; set; }
 
-    public string FirstName { get; set; } = null!;
-
-    public string? LastName { get; set; }
-
-    public string Phone { get; set; } = null!;
-
     public string Email { get; set; } = null!;
 
+    public string? Profileimage { get; set; }
+
+    public string Firstname { get; set; } = null!;
+
+    public string? Lastname { get; set; }
+
     public string Username { get; set; } = null!;
+
+    public string Phone { get; set; } = null!;
 
     public string Country { get; set; } = null!;
 
@@ -23,27 +25,23 @@ public partial class User
 
     public string City { get; set; } = null!;
 
+    public string? Zipcode { get; set; }
+
     public string Address { get; set; } = null!;
 
-    public int Zipcode { get; set; }
+    public int? Roleid { get; set; }
 
-    public int RoleId { get; set; }
+    public bool? Isdeleted { get; set; }
 
-    public bool? IsActive { get; set; }
+    public bool? Isactive { get; set; }
 
-    public string? ProfileImage { get; set; }
+    public DateTime? Createddate { get; set; }
 
-    public bool? IsDeleted { get; set; }
+    public string? Createdby { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+    public DateTime? Updateddate { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+    public string? Updatedby { get; set; }
 
-    public string? CreatedBy { get; set; }
-
-    public string? UpdatedBy { get; set; }
-
-    public virtual ICollection<Account> Accounts { get; set; } = new List<Account>();
-
-    public virtual Role Role { get; set; } = null!;
+    public virtual Role? Role { get; set; }
 }

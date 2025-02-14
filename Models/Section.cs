@@ -7,21 +7,21 @@ public partial class Section
 {
     public int Id { get; set; }
 
-    public string SectionName { get; set; } = null!;
+    public string Name { get; set; } = null!;
 
-    public string? SectionDescription { get; set; }
+    public bool? Isdeleted { get; set; }
 
-    public bool? IsDeleted { get; set; }
+    public string? Description { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+    public DateTime? Createddate { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+    public string? Createdby { get; set; }
 
-    public string? CreatedBy { get; set; }
+    public DateTime? Updateddate { get; set; }
 
-    public string? UpdatedBy { get; set; }
+    public string? Updatedby { get; set; }
 
     public virtual ICollection<Table> Tables { get; set; } = new List<Table>();
 
-    public virtual ICollection<WaitingToken> WaitingTokens { get; set; } = new List<WaitingToken>();
+    public virtual ICollection<Waitingtoken> Waitingtokens { get; set; } = new List<Waitingtoken>();
 }

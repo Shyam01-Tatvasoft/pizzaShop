@@ -7,17 +7,17 @@ public partial class City
 {
     public int Id { get; set; }
 
-    public string CityName { get; set; } = null!;
+    public string Name { get; set; } = null!;
 
-    public int? StateId { get; set; }
+    public int? Stateid { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+    public DateTime? Createddate { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+    public string? Createdby { get; set; }
 
-    public string? CreatedBy { get; set; }
+    public DateTime? Updateddate { get; set; }
 
-    public string? UpdatedBy { get; set; }
+    public string? Updatedby { get; set; }
 
-    public virtual Country? State { get; set; }
+    public virtual State? State { get; set; }
 }

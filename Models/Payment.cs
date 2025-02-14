@@ -13,15 +13,15 @@ public partial class Payment
 
     public string Status { get; set; } = null!;
 
-    public int? InvoiceId { get; set; }
+    public int? Invoiceid { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+    public DateTime? Createddate { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+    public string? Createdby { get; set; }
 
-    public string? CreatedBy { get; set; }
+    public DateTime? Updateddate { get; set; }
 
-    public string? UpdatedBy { get; set; }
+    public string? Updatedby { get; set; }
 
     public virtual Invoice? Invoice { get; set; }
 
