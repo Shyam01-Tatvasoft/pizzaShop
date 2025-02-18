@@ -1,21 +1,26 @@
 using System.Diagnostics;
 using System.Net;
 using System.Net.Mail;
+using System.Text;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using PizzaShop.Models;
 using PizzaShop.ViewModels;
 
 public class Authentication : Controller
 {
     private readonly PizzashopContext _context;
-    public Authentication(PizzashopContext context)
+    private readonly IDataProtector _dataProtector;
+    public Authentication(PizzashopContext context, IDataProtectionProvider dataProtectionProvider)
     {
         _context = context;
+        _dataProtector = dataProtectionProvider.CreateProtector("ResetPasswordProtector");
     }
 
     [HttpGet]
-    public ActionResult Login()
+    public IActionResult Login()
     {
         Console.WriteLine(Request.Cookies["email"]);
 
@@ -68,51 +73,141 @@ public class Authentication : Controller
         return View();
     }
 
-    [HttpPost]
-    public void SendMail(string ToEmail)
+    public IActionResult EmailTemplate(String ResetLink)
     {
-        string SenderMail = "mailto:test.dotnet@etatvasoft.com";
+        return View();
+    }
+
+    private static string GetEmailTemplate(string ResetLink)
+    {
+        var templatePath = Path.Combine(Directory.GetCurrentDirectory(), "Views", "EmailTemplate.html");
+        if (!System.IO.File.Exists(templatePath))
+        {
+            return "<p>Email template Not Fount</p>";
+        }
+        string emailbody = System.IO.File.ReadAllText(templatePath);
+        return emailbody.Replace("{{Link}}", ResetLink);
+    }
+
+
+
+    public void SendMail(string ToEmail, string subject, string body)
+    {
+        string SenderMail = "test.dotnet@etatvasoft.com";
         string SenderPassword = "P}N^{z-]7Ilp";
         string Host = "mail.etatvasoft.com";
         int Port = 587;
+
         var smtpClient = new SmtpClient(Host)
         {
             Port = Port,
             Credentials = new NetworkCredential(SenderMail, SenderPassword),
-            // EnableSsl = true,
         };
-        string? resetLink = Url.Action("ResetPassword", "Home", new { email = ToEmail, timeStamp = DateTime.UtcNow.Ticks }, Request.Scheme);
 
-        var mailMessage = new MailMessage
-        {
-            From = new MailAddress(SenderMail),
-            Subject = "To Reset Your Password",
-            Body = $"Click <a href = '{resetLink}' > Here </a> to reset your password",
-            IsBodyHtml = true,
-        };
+        MailMessage mailMessage = new MailMessage();
+        mailMessage.From = new MailAddress(SenderMail);
         mailMessage.To.Add(ToEmail);
+        mailMessage.Subject = subject;
+        mailMessage.IsBodyHtml = true;
+        StringBuilder mailBody = new StringBuilder();
+        mailMessage.Body = body;
 
         smtpClient.Send(mailMessage);
     }
 
+    private string GenerateResetToken(string email)
+    {
+        DateTime expiry = DateTime.UtcNow.AddHours(24);
+        string tokenData = $"{email} | {expiry.Ticks}";
+        return _dataProtector.Protect(tokenData);       //encrypted token
+    }
+
+    [HttpPost]
     public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
     {
         if (ModelState.IsValid)
         {
-            var user = _context.Accounts.FirstOrDefaultAsync(u => u.Email == model.Email);
-
-            if (user != null)
+            var account = await _context.Accounts.FirstOrDefaultAsync(acc => acc.Email == model.Email);
+            if (account == null)
             {
-                SendMail(model.Email);
+                ModelState.AddModelError("Email", "No account found with this email");
+                return View(model);
             }
-            return View("ForgotPasswordConfirmation");
+
+            string resetToken = GenerateResetToken(model.Email);
+            string resetLink = $"http://localhost:5017/Authentication/ResetPassword?token={resetToken}";
+
+            string subject = "Password reset request";
+            string body = GetEmailTemplate(resetLink);
+
+            SendMail(model.Email, subject, body);
+
+            TempData["ForgotPasswordMsg"] = "Mail Sent Successfully. Please check your mail";
+            return RedirectToAction("ForgotPassword");
         }
-        return View();
+        return View(model);
     }
 
-    public ActionResult ResetPassword()
+    [HttpGet]
+    public IActionResult ResetPassword(string token)
     {
-        return View();
+        if (string.IsNullOrEmpty(token))
+        {
+            return BadRequest("Invalid reset token");
+        }
+        var model = new ResetPasswordViewModel { Token = token };
+        Console.WriteLine(model);
+        return View(model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+    {
+        if (ModelState.IsValid)
+        {
+            string unprotectedToken;
+            try
+            {
+                //decrypt the token
+                unprotectedToken = _dataProtector.Unprotect(model.Token);
+            }
+            catch
+            {
+                ModelState.AddModelError("", "Invalid or expired password reset token");
+                return View(model);
+            }
+
+            //token has {email} | {expiryticks}
+            var parts = unprotectedToken.Split('|');
+            if (parts.Length != 2 || !long.TryParse(parts[1], out long expiryTicks))
+            {
+                ModelState.AddModelError("error", "Invalid token");
+                return View(model);
+            }
+
+            DateTime expiryDate = new DateTime(expiryTicks, DateTimeKind.Utc);      //converts expiry ticks into datetime object
+            if (expiryDate < DateTime.UtcNow)
+            {
+                ModelState.AddModelError("error", "Password reset token has expired");
+                return View(model);
+            }
+
+            string email = parts[0].Trim();
+            var account = await _context.Accounts.FirstOrDefaultAsync(a => a.Email == email);
+            if (account == null)
+            {
+                ModelState.AddModelError("error", "Account not found");
+                return View(model);
+            }
+
+            account.Password = model.NewPassword;
+            Console.WriteLine("Save changes called");
+            _context.SaveChanges();
+
+            TempData["SuccessMessage"] = "Your password has been reset successfully, you can now log in";
+            return RedirectToAction("Login", "Authentication");
+        }
+        return View(model);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
