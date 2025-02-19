@@ -1,10 +1,17 @@
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Net.Mail;
+using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.VisualBasic;
 using PizzaShop.Models;
 using PizzaShop.ViewModels;
@@ -13,25 +20,46 @@ public class Authentication : Controller
 {
     private readonly PizzashopContext _context;
     private readonly IDataProtector _dataProtector;
-    public Authentication(PizzashopContext context, IDataProtectionProvider dataProtectionProvider)
+    private readonly IConfiguration _config; // for access appsetting.json data we use IConfiguration Interface
+    public Authentication(PizzashopContext context, IDataProtectionProvider dataProtectionProvider, IConfiguration config)
     {
         _context = context;
         _dataProtector = dataProtectionProvider.CreateProtector("ResetPasswordProtector");
+        _config = config;
     }
 
     [HttpGet]
     public IActionResult Login()
     {
-        Console.WriteLine(Request.Cookies["email"]);
+        var AuthToken = Request.Cookies["AuthToken"];
 
-        if (Request.Cookies["email"] != null)
+        if (!string.IsNullOrEmpty(AuthToken))
         {
-            Console.WriteLine(Request.Cookies["email"]);
             return RedirectToAction("Index", "Home");
         }
         return View();
     }
 
+    private string GenerateToken(string email, string role){
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+         var authClaims = new List<Claim>{
+            new Claim(ClaimTypes.Email, email),
+            new Claim(ClaimTypes.Role, role),
+         };
+
+        var token = new JwtSecurityToken(
+            issuer: _config["Jwt: Issuer"],
+            audience: _config["Jwt:Audience"],
+            claims: authClaims,
+            expires: DateTime.UtcNow.AddHours(1),
+            signingCredentials: credentials
+        );
+
+        return new JwtSecurityTokenHandler().WriteToken(token);
+        
+        // return tokenValue;
+    }
     [HttpPost]
     public async Task<IActionResult> Login(LoginViewModel login)
     {
@@ -41,18 +69,45 @@ public class Authentication : Controller
             var password = login.Password;
 
             var user = await _context.Accounts.FirstOrDefaultAsync(d => d.Email == email && d.Password == password);
-
+            
             if (user != null)
             {
                 TempData["Email"] = email;
-                if (login.RememberMe)
-                {
-                    var option = new CookieOptions
+
+                // get Role
+                var role = await _context.Roles.FirstOrDefaultAsync(a => a.Id == user.Id);
+                
+                // create JWT Token 
+                var token = GenerateToken(email,role.Name);
+                
+                if(token != ""){
+                    TempData["token"] = token;
+                    Response.Cookies.Append("AuthToken",token, new CookieOptions{
+                        Secure = true,
+                        Expires = DateTime.UtcNow.AddMinutes(30),
+                        HttpOnly = true
+                    });
+                }
+                
+                 var option = new CookieOptions
                     {
                         Expires = DateTime.Now.AddDays(30),
                         Secure = true
                     };
                     Response.Cookies.Append("email", email, option);
+                // Store Jwt Authentication Toke
+                using(var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",token);
+                }
+
+                if (login.RememberMe)
+                {
+                    Response.Cookies.Append("AuthToken",token, new CookieOptions{
+                        Secure = true,
+                        Expires = DateTime.UtcNow.AddMinutes(30),
+                        HttpOnly = true
+                    });
                 }
 
                 return RedirectToAction("Index", "Home");
@@ -67,7 +122,7 @@ public class Authentication : Controller
         return View(login);
     }
 
-
+    [HttpGet]
     public ActionResult ForgotPassword()
     {
         return View();
@@ -119,6 +174,7 @@ public class Authentication : Controller
     {
         DateTime expiry = DateTime.UtcNow.AddHours(24);
         string tokenData = $"{email} | {expiry.Ticks}";
+        Console.WriteLine("TokenData" + tokenData);
         return _dataProtector.Protect(tokenData);       //encrypted token
     }
 
@@ -205,6 +261,7 @@ public class Authentication : Controller
             _context.SaveChanges();
 
             TempData["SuccessMessage"] = "Your password has been reset successfully, you can now log in";
+            
             return RedirectToAction("Login", "Authentication");
         }
         return View(model);

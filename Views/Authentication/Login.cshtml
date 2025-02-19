@@ -86,7 +86,6 @@
   <script>
     $("#ForgotPassword").click(function () {
       let email = $("#email").val();
-      console.log(email)
       if (email) {
         window.location.href = "/Authentication/ForgotPassword?email=" + email;
       }

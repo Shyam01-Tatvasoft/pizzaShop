@@ -1,15 +1,24 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - PizzaShop</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/PizzaShop.styles.css" asp-append-version="true" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>@ViewData["Title"] - PizzaShop</title>
+  <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+  <link rel="stylesheet" href="~/PizzaShop.styles.css" asp-append-version="true" />
+  <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 </head>
+
 <body>
-    @* <header>
+  @* <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PizzaShop</a>
@@ -31,107 +40,100 @@
         </nav>
     </header> *@
 
-    <div class="container-fluid">
-      <div class="row main-container">
-        <!-- sidebar -->
-        <div class="offcanvas-lg offcanvas-start col-lg-2 p-0" id="sidebar">
-          <div
-            class="d-flex align-items-center justify-content-center p-0 mb-4 sidebar-header"
-          >
-            <img
-              src="~/images/logos/pizzashop_logo.png"
-              alt="pizzashop_logo"
-              id="pizzashop_logo"
-            />
-            <h6 class="textBlue ms-2">PIZZASHOP</h6>
-            <button
-              class="btn btn-close close-btn ms-4"
-              id="sidebar-cancel-btn"
-              type="button"
-              data-bs-toggle="offcanvas"
-              data-bs-target="#sidebar"
-              aria-controls="offcanvasWithBothOptions"
-            ></button>
-          </div>
-          <ul class="nav flex-column">
-            <a href="./AdminDashboard.html">
-              <li class="nav-item">
-                <i class="fa-solid fa-table-cells-large me-2"></i>Dashboard
-              </li>
-            </a>
-            <a href="./User.html">
-              <li class="nav-item">
-                <i class="fa-solid fa-users me-2"></i>User
-              </li>
-            </a>
-            <a href="./Permission.html">
-              <li class="nav-item">
-                <i class="fa-solid fa-monument me-2"></i>Role and Permission
-              </li>
-            </a>
-            <a href="./Menu.html">
-              <li class="nav-item">
-                <i class="fa-solid fa-square me-2"></i>Menu
-              </li>
-            </a>
-            <a href="./AdminDashboard.html">
-              <li class="nav-item">
-                <i class="fa-solid fa-money-check-dollar me-2"></i>Table And
-                Section
-              </li>
-            </a>
-            <a href="./AdminDashboard.html">
-              <li class="nav-item">
-                <i class="fa-solid fa-cart-plus me-2"></i>Taxes And Fees
-              </li>
-            </a>
-            <a href="./AdminDashboard.html">
-              <li class="nav-item">
-                <i class="fa-solid fa-users-rectangle me-2"></i>Orders
-              </li>
-            </a>
-            <a href="./AdminDashboard.html">
-              <li class="nav-item">
-                <i class="fa-solid fa-user me-2"></i>Customers
-              </li>
-            </a>
-          </ul>
+  <div class="container-fluid">
+    <div class="row main-container">
+      <!-- sidebar -->
+      <div class="offcanvas-lg offcanvas-start col-lg-2 p-0" id="sidebar">
+        <div class="d-flex align-items-center justify-content-center p-0 mb-4 sidebar-header">
+          <img src="~/images/logos/pizzashop_logo.png" alt="pizzashop_logo" id="pizzashop_logo" />
+          <h6 class="textBlue ms-2">PIZZASHOP</h6>
+          <button class="btn btn-close close-btn ms-4" id="sidebar-cancel-btn" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#sidebar" aria-controls="offcanvasWithBothOptions"></button>
         </div>
+        <ul class="nav flex-column">
+          <a href="./AdminDashboard.html">
+            <li class="nav-item">
+              <i class="fa-solid fa-table-cells-large me-2"></i>Dashboard
+            </li>
+          </a>
+          <a href="./User.html">
+            <li class="nav-item">
+              <i class="fa-solid fa-users me-2"></i>User
+            </li>
+          </a>
+          <a href="./Permission.html">
+            <li class="nav-item">
+              <i class="fa-solid fa-monument me-2"></i>Role and Permission
+            </li>
+          </a>
+          <a href="./Menu.html">
+            <li class="nav-item">
+              <i class="fa-solid fa-square me-2"></i>Menu
+            </li>
+          </a>
+          <a href="./AdminDashboard.html">
+            <li class="nav-item">
+              <i class="fa-solid fa-money-check-dollar me-2"></i>Table And
+              Section
+            </li>
+          </a>
+          <a href="./AdminDashboard.html">
+            <li class="nav-item">
+              <i class="fa-solid fa-cart-plus me-2"></i>Taxes And Fees
+            </li>
+          </a>
+          <a href="./AdminDashboard.html">
+            <li class="nav-item">
+              <i class="fa-solid fa-users-rectangle me-2"></i>Orders
+            </li>
+          </a>
+          <a href="./AdminDashboard.html">
+            <li class="nav-item">
+              <i class="fa-solid fa-user me-2"></i>Customers
+            </li>
+          </a>
+        </ul>
+      </div>
 
-        <div class="col-lg-10 main-section">
-          <!-- navbar -->
-          <nav
-            class="navbar navbar-expanded-lg justify-content-end align-items-center navbar-light fixed-top"
-            style="height: 50px"
-          >
-            <img
-              src="~/images/icons/menu-bar.svg"
-              alt="toggle-btn"
-              class="mx-2"
-              id="menu-icon"
-              data-bs-toggle="offcanvas"
-              data-bs-target="#sidebar"
-              aria-controls="offcanvasWithBothOptions"
-            />
-            <img
-              src="~/images/icons/customer.svg"
-              alt="User-icon"
-              class="me-3"
-            />
-          </nav>
-
-          <!-- main content -->
-            <div class="container mt-5">
-                <main role="main" class="">
-                @RenderBody()
-                </main>
+      <div class="col-lg-10 main-section">
+        <!-- navbar -->
+        <nav class="navbar navbar-expanded-lg justify-content-end align-items-center navbar-light fixed-top"
+          style="height: 50px">
+          <img src="~/images/icons/menu-bar.svg" alt="toggle-btn" class="mx-2" id="menu-icon" data-bs-toggle="offcanvas"
+            data-bs-target="#sidebar" aria-controls="offcanvasWithBothOptions" />
+          <img src="~/images/icons/customer.svg" alt="User-icon" class="me-3" />
+          <div class="btn-group">
+            <div class="btn-group dropstart">
+              <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Dropstart
+              </button>
+              <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">
+                    <img src="~/images/icons/customer.svg" alt="User-icon" class="me-3" />
+                    @TempData["email"]
+                  </a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><My class="dropdown-item" href=""><i class="fa fa-user-circle me-2" aria-hidden="true"></i>My Profile</a></li>
+                  <li><a class="dropdown-item" href="#">Change Password</a></li>
+                  <li><a class="dropdown-item" href="#"><i class="fa fa-sign-out me-2" aria-hidden="true"></i>Logout</a></li>
+              </ul>
             </div>
+          </div>
+        </nav>
+
+        <!-- main content -->
+        <div class="mt-5">
+          <main role="main" class="">
+            @RenderBody()
+          </main>
         </div>
       </div>
     </div>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+  </div>
+  <script src="~/lib/jquery/dist/jquery.min.js"></script>
+  <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="~/js/site.js" asp-append-version="true"></script>
+  @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

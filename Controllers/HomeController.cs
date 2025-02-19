@@ -15,7 +15,13 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return View();
+        var AuthToken = Request.Cookies["AuthToken"];
+        Console.WriteLine("AuthToken ", AuthToken);
+        if(string.IsNullOrEmpty(AuthToken)){
+            return RedirectToAction("Login", "Authentication");
+        }else{
+            return View();
+        }
     }
 
     public IActionResult Privacy()
