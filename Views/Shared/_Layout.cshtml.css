@@ -46,7 +46,7 @@ button.accept-policy {
   white-space: nowrap;
   line-height: 60px;
 } */
-:root{
+:root {
   --textBlue: #006098;
 }
 
@@ -58,21 +58,21 @@ button.accept-policy {
   transition: transform 0.3s ease;
 }
 
-#sidebar ul{
+#sidebar ul {
   /* margin-top: 40px; */
   background-color: white;
 }
 
-#sidebar ul a{
+#sidebar ul a {
   text-decoration: none;
   color: gray;
   font-weight: 500;
 }
 
-#sidebar ul a:hover{
+#sidebar ul a:hover {
   background-color: rgba(211, 211, 211, 0.384);
   color: var(--textBlue);
-} 
+}
 #sidebar li {
   list-style-type: none;
   /* margin: 10px 0px 10px 0px; */
@@ -81,18 +81,17 @@ button.accept-policy {
   text-align: left;
   display: flex;
   position: relative;
-  padding-left:10%;
+  padding-left: 10%;
   align-items: center;
   font-size: medium;
 }
-.sidebar-header{
+.sidebar-header {
   background-color: white;
   z-index: 2;
 }
-#sidebar-cancel-btn{
+#sidebar-cancel-btn {
   display: none;
 }
-
 
 #pizzashop_logo {
   width: 60px;
@@ -100,14 +99,22 @@ button.accept-policy {
 }
 
 /* Navbar */
-.navbar{
-  height: 50px; 
+.navbar {
+  height: 50px;
   background-color: #006098;
 }
-#menu-icon{
+#menu-icon {
   display: none;
 }
 
+/* #sidebar {
+  z-index: 2000;
+} */
+
+#alert-icon {
+  width: 5px;
+  height: 5px;
+}
 
 @media (max-width: 768px) {
   .sidebar {
@@ -117,7 +124,7 @@ button.accept-policy {
 
   .sidebar.visible {
     background-color: aqua;
-    transform: translateX(0); 
+    transform: translateX(0);
   }
 
   /* #login-form-section {
@@ -130,10 +137,7 @@ button.accept-policy {
   .main-container {
     height: 100%;
   }
-
-  
 }
-
 
 @media (max-width: 1024px) {
   /* #login-form-section {
@@ -156,14 +160,14 @@ button.accept-policy {
   } */
 }
 
-@media (max-width:992px) {
+@media (max-width: 992px) {
   .offcanvas-lg.offcanvas-start {
     width: 230px;
   }
-  #menu-icon{
+  #menu-icon {
     display: block !important;
   }
-  #sidebar-cancel-btn{
+  #sidebar-cancel-btn {
     display: block;
   }
 }

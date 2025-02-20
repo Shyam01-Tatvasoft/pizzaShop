@@ -60,6 +60,8 @@ public class Authentication : Controller
         
         // return tokenValue;
     }
+    
+    
     [HttpPost]
     public async Task<IActionResult> Login(LoginViewModel login)
     {
@@ -72,10 +74,8 @@ public class Authentication : Controller
             
             if (user != null)
             {
-                TempData["Email"] = email;
-
                 // get Role
-                var role = await _context.Roles.FirstOrDefaultAsync(a => a.Id == user.Id);
+                var role = await _context.Roles.FirstOrDefaultAsync(a => a.Id == user.Roleid);
                 
                 // create JWT Token 
                 var token = GenerateToken(email,role.Name);
@@ -91,7 +91,7 @@ public class Authentication : Controller
                 
                  var option = new CookieOptions
                     {
-                        Expires = DateTime.Now.AddDays(30),
+                        Expires = DateTime.Now.AddMinutes(30),
                         Secure = true
                     };
                     Response.Cookies.Append("email", email, option);

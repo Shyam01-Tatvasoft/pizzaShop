@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PizzaShop.ViewModels;
 
-public class UserViewModel
+public class ProfileViewModel
 {
     [Required(ErrorMessage = "FirstName is required.")]
     public string FirstName { get; set; } = null!;
