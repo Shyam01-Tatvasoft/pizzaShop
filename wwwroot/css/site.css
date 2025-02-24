@@ -1,3 +1,7 @@
+:root{
+  --textBlue: #006098;
+}
+
 /* Login Page */
 #login-page {
   height: 100vh;
@@ -27,6 +31,12 @@
   width: 40px;
   height: 40px;
 }
+
+/* common Css */
+.textBlue{
+  color: var(--textBlue) !important;
+}
+
 @media (max-width: 768px) {
   #login-form-section {
     background-image: url(../images/pizzashop-bg-blure.jpg);

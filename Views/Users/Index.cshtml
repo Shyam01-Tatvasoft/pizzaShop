@@ -12,13 +12,13 @@
 <div class="">
     <!-- User header -->
     <div class="row align-items-center d-flex flex-wrap">
-        <h1 class="text-primary col-2">Users</h1>
+        <h1 class="col-2 textBlue">Users</h1>
         <div class="col-10 d-flex justify-content-end">
             <form method="get">
                 <div class="form-input-div my-3 me-3">
                     <input type="text" placeholder="Search" class="form-control p-2 d-none d-sm-block"
                         name="searchString" value="@searchString" />
-                    <button type="submit"class="form-input-icon bg-transparent border-0" >
+                    <button type="submit" class="form-input-icon bg-transparent border-0">
                         <i class="fa-solid fa-search" id="eye-icon"
                                 style="color: gray"></i>
                         
@@ -26,7 +26,7 @@
                 </div>
             </form>
             <button type="button" class="btn btn-primary my-3">
-                <a href="./AddUser.html" style="text-decoration: none; color: white">+ Add User</a>
+                <a href="/Users/CreateUser" style="text-decoration: none; color: white">+ Add User</a>
             </button>
         </div>
     </div>
@@ -61,10 +61,10 @@
                         <td>@user.Phone</td>
                         <td>@user.Role</td>
                         <td>
-                            <p class="user-active">Active</p>
+                            <p class="user-active">@user.Isactive  </p>
                         </td>
                         <td>
-                            <i class="fa-solid fa-pen me-3"></i>
+                            <a href="@Url.Action("UpdateUser","Users",new {id = user.Id})" style="text-decoration: none; color: black;"><i class="fa-solid fa-pen me-3"></i></a>
                             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#deleteModal">
                                 <i class="fa-regular fa-trash-can"></i>
                             </button>

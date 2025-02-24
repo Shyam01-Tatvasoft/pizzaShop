@@ -1,7 +1,9 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Crypto.Generators;
 using PizzaShop.Models;
+using PizzaShop.Utils;
 using PizzaShop.ViewModels;
 public class Users : Controller
 {
@@ -11,21 +13,6 @@ public class Users : Controller
     {
         _context = context;
     }
-
-    public async Task<IActionResult> GetUsers(int pageIndex, int pageSize)
-    {
-        var users = await _context.Users
-            .OrderBy(u => u.Id)
-            .Skip((pageIndex - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync();
-
-        var count = await _context.Users.CountAsync();
-        var totalPages = (int)Math.Ceiling(count / (double)pageSize);
-
-        return Ok(users);
-    }
-
 
     [HttpGet]
     public async Task<IActionResult> Index(string searchString, int pageIndex = 1, int pageSize = 3)
@@ -53,11 +40,7 @@ public class Users : Controller
 
 
         var count = _context.Users.Count();
-        Console.WriteLine("count" + count);
-        Console.WriteLine("pageSize" + pageSize);
-        Console.WriteLine("user1" + _context.Users.Count());
         var totalPage = (int)Math.Ceiling(count / (double)pageSize);
-        Console.WriteLine("total" + totalPage);
         ViewBag.Count = count;
         ViewBag.pageIndex = pageIndex;
         ViewBag.pageSize = pageSize;
@@ -86,5 +69,194 @@ public class Users : Controller
         }
 
         return View(userList);
+    }
+
+    [HttpGet]
+    public IActionResult CreateUser()
+    {
+        var email = Request.Cookies["email"];
+        if (String.IsNullOrEmpty(email))
+        {
+            return RedirectToAction("Login", "Authentication");
+        }
+        var user = _context.Users.FirstOrDefault(u => u.Email == email);
+        // also need to verify is it Admin or not
+        if (user == null)
+        {
+            return RedirectToAction("Login", "Authentication");
+        }
+        var AllCountries = _context.Countries.ToList();
+        var AllStates = _context.States.ToList();
+        var AllCities = _context.Cities.ToList();
+        ViewBag.AllCountries = AllCountries;
+        ViewBag.AllCities = AllCities;
+        ViewBag.AllStates = AllStates;
+
+        return View();
+    }
+
+
+    [HttpPost]
+    public async Task<IActionResult> CreateUser(CreateUserViewModel model)
+    {
+        if (ModelState.IsValid)
+        {
+            var email = Request.Cookies["email"];
+
+            // also need to verify is it Admin or not
+            if (String.IsNullOrEmpty(email))
+            {
+                return RedirectToAction("Login", "Authentication");
+            }
+
+            var user = _context.Users.FirstOrDefault(u => u.Email == email);
+
+            var AllCountries = await _context.Countries.ToListAsync();
+            var AllStates = await _context.States.ToListAsync();
+            var AllCities = await _context.Cities.ToListAsync();
+            ViewBag.AllCountries = AllCountries;
+            ViewBag.AllCities = AllCities;
+            ViewBag.AllStates = AllStates;
+            var findUser = _context.Users.FirstOrDefault(u => u.Email == model.Email || u.Username == model.Username);
+            if (findUser != null)
+            {
+                ViewData["UserExistMsg"] = "User Already Exist";
+                return View();
+            }
+
+            var newUser = new User
+            {
+                Firstname = model.Firstname,
+                Lastname = model.Lastname,
+                Username = model.Username,
+                Roleid = _context.Roles.FirstOrDefault(r => r.Id == int.Parse(model.Role)).Id,
+                Email = model.Email,
+                Country = model.Country,
+                State = model.State,
+                City = model.City,
+                Zipcode = model.Zipcode,
+                Address = model.Address,
+                Phone = model.Phone,
+                Profileimage = model.Profileimage,
+                Createdby = user.Id.ToString()
+            };
+
+            string HashPassword = PasswordUtills.HashPassword(model.Password);
+            var newAccount = new Account
+            {
+                Email = model.Email,
+                Roleid = _context.Roles.FirstOrDefault(r => r.Id == int.Parse(model.Role)).Id,
+                Password = HashPassword,
+                Createdby = user.Id.ToString(),
+            };
+
+            _context.Accounts.Add(newAccount);
+            _context.Users.Add(newUser);
+            await _context.SaveChangesAsync();
+            ViewData["SuccessMessage"] = "User Created Successfully";
+            return RedirectToAction("Index", "Users");
+        }
+        else
+        {
+            var AllCountries = _context.Countries.ToList();
+            var AllStates = _context.States.ToList();
+            var AllCities = _context.Cities.ToList();
+            ViewBag.AllCountries = AllCountries;
+            ViewBag.AllCities = AllCities;
+            ViewBag.AllStates = AllStates;
+            return View();
+        }
+
+    }
+
+
+    [HttpGet]
+    public IActionResult UpdateUser(int Id)
+    {
+        var email = Request.Cookies["email"];
+        if (String.IsNullOrEmpty(email))
+        {
+            return RedirectToAction("Login", "Authentication");
+        }
+        var user = _context.Users.FirstOrDefault(u => u.Email == email);
+        // also need to verify is it Admin or not
+        if (user == null)
+        {
+            return RedirectToAction("Login", "Authentication");
+        }
+        var AllCountries = _context.Countries.ToList();
+        var AllStates = _context.States.ToList();
+        var AllCities = _context.Cities.ToList();
+        ViewBag.AllCountries = AllCountries;
+        ViewBag.AllCities = AllCities;
+        ViewBag.AllStates = AllStates;
+
+        var editUser = _context.Users.FirstOrDefault(u => u.Id == Id);
+
+        if (editUser == null)
+        {
+            ViewData["ErrorMessage"] = "User Not Found";
+            return View("Index", "Users");
+        }
+
+        var model = new UpdateUserViewModel
+        {
+            Id = editUser.Id,
+            Firstname = editUser.Firstname,
+            Lastname = editUser.Lastname,
+            Username = editUser.Lastname,
+            Email = editUser.Email,
+            Address = editUser.Address,
+            City = editUser.City,
+            State = editUser.State,
+            Country = editUser.Country,
+            Zipcode = editUser.Zipcode,
+            Phone = editUser.Phone,
+            Profileimage = editUser.Profileimage,
+            Role = editUser.Roleid.ToString(),
+            Updatedby = user.Id.ToString(),
+            Updateddate = DateTime.Now,
+            Status = user.Isactive == true ? "1" : "0"
+        };
+        return View(model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> UpdateUser(UpdateUserViewModel model)
+    {
+        if (ModelState.IsValid)
+        {
+            var email = Request.Cookies["email"];
+            if (String.IsNullOrEmpty(email))
+            {
+                return RedirectToAction("Login", "Authentication");
+            }
+            var user = _context.Users.FirstOrDefault(u => u.Email == email);
+
+            var editUser = _context.Users.FirstOrDefault(u => u.Id == model.Id);
+            if(editUser != null)
+            {
+                editUser.Firstname = model.Firstname;
+                editUser.Lastname = model.Lastname;
+                editUser.Username = model.Username;
+                editUser.Address = model.Address;
+                editUser.Phone = model.Phone;
+                editUser.City = model.City;
+                editUser.State = model.State;
+                editUser.Country = model.Country;
+                editUser.Zipcode = model.Zipcode;
+                editUser.Isactive = model.Status == "1" ? true : false;
+                editUser.Roleid = int.Parse(model.Role);
+                editUser.Updateddate = DateTime.Now;
+                editUser.Updatedby = user.Id.ToString();
+                editUser.Profileimage = model.Profileimage;
+
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index","Users");
+            }
+            
+            return RedirectToAction("Index", "Users");
+        }
+        return View();
     }
 }

@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.VisualBasic;
 using PizzaShop.Models;
+using PizzaShop.Utils;
 using PizzaShop.ViewModels;
 
 public class Authentication : Controller
@@ -74,6 +75,11 @@ public class Authentication : Controller
             
             if (user != null)
             {
+                // var verify = PasswordUtills.VerifyPassword(login.Password,user.Password);
+                // if(!verify){
+                //     ViewBag.Message = "Invalid Password";
+                //     return View();
+                // }
                 // get Role
                 var role = await _context.Roles.FirstOrDefaultAsync(a => a.Id == user.Roleid);
                 
