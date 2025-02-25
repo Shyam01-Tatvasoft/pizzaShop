@@ -19,8 +19,7 @@ public class UpdateUserViewModel
     [Required(ErrorMessage = "Phone is required")]
     public string Phone { get; set; } = null!;
 
-    [Required(ErrorMessage = "Email is required")]
-    public string Email { get; set; } = null!;
+    public string Email { get; set; }
 
     [Required(ErrorMessage = "Status is required")]
     public string Status { get; set; } = null!;

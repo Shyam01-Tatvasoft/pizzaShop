@@ -134,11 +134,6 @@ public class Authentication : Controller
         return View();
     }
 
-    public IActionResult EmailTemplate(String ResetLink)
-    {
-        return View();
-    }
-
     private static string GetEmailTemplate(string ResetLink)
     {
         var templatePath = Path.Combine(Directory.GetCurrentDirectory(), "Views", "EmailTemplate.html");

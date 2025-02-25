@@ -16,7 +16,6 @@ public class HomeController : Controller
     public IActionResult Index()
     {
         var AuthToken = Request.Cookies["AuthToken"];
-        Console.WriteLine("AuthToken ", AuthToken);
         if(string.IsNullOrEmpty(AuthToken)){
             return RedirectToAction("Login", "Authentication");
         }else{

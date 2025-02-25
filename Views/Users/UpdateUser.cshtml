@@ -70,9 +70,10 @@
                     <div class="col-md-6">
                         <div class="form-floating mb-3">
                             <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
-                                asp-for="Email" />
+                            value="@Model.Email" disabled/>
                             <label for="Email">Email address</label>
-                            <span asp-validation-for="Email" class="text-danger ms-2"></span>
+                            <input type="hidden" name="Email" asp-for="Email">
+                            <span class="text-danger ms-2"></span>
                         </div>
                     </div>
                     <div class="col-md-6">
